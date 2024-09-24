@@ -1,2 +1,2 @@
 # DigiMusicDataBase
-MusicDataBase based on Api Musci
+MusicDataBase based on Api Music
