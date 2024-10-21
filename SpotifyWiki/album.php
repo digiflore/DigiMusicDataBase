@@ -12,6 +12,12 @@
       <?php
       require_once('../api/spotify-api.php');
       require_once('../public/php/functions.php');
+      require_once '../public/php/SeekerCommunicator.php';
+
+      // Envoi l'url à l'historique de navigation
+      $current_url = GetCurrentURL();
+      $communicator = new SeekerCommunicator();
+      $communicator->AddURL($current_url, "album");
 
       $spotify = new SpotifyApi();
       $album = $spotify->GetAlbumById($_GET['album_id']);
@@ -23,32 +29,13 @@
       $dateFr = date("d/m/Y", strtotime($release_date));
       ?>
       <br><br>
-      <table>
-        <tr>
-          <td width=100px rowspan="5">
-            <img class="picture" src="<?= $album->images[0]->url ?>" alt=" Image non disponible" />
-          </td>
-          <td>
-            <h2><?= $album->name ?></h2>
-          </td>
-        </tr>
-        <tr>
-          <td><?= $artists ?></td>
-        </tr>
-        <tr>
-          <td><a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../images/spotify.png" /></a></td>
-        </tr>
-        <tr>
-          <td>Date de sortie : <?= $dateFr ?></td>
-        </tr>
-        <tr>
-          <td><?= $album->label ?></td>
-        </tr>
-      </table>
-      <br><br>
+      <img class="picture" src="<?= $album->images[0]->url ?>" alt=" Image non disponible" />
+      <?= $album->name ?><br>
+      <?= $artists ?><br>
+      <a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../images/spotify.png" /></a><br>
+      Date de sortie : <?= $dateFr ?><br>
+      <?= $album->copyrights[0]->text ?><br>
       <?php
-      $tracks = $spotify->GetAlbumTracks($_GET['album_id']);
-
       $lib = "";
       if ($album->total_tracks > 1)
         $lib = "titres";
@@ -56,6 +43,11 @@
         $lib = "titre";
       ?>
       <?= $album->total_tracks ?> <?= $lib ?>
+      </div>
+      <br><br>
+      <?php
+      $tracks = $spotify->GetAlbumTracks($_GET['album_id']);
+      ?>
       <br><br>
       <table>
         <tr>
@@ -67,10 +59,12 @@
         </tr>
         <?php
         foreach ($tracks->items as $track) {
-          // var_dump($track);
+          //var_dump($track);
           $my_artists = array();
-          foreach ($track->artists as $artist)
+          foreach ($track->artists as $artist) {
+            $communicator->AddArtist($artist->id);
             array_push($my_artists, "<a href='./artist.php?artist_id=$artist->id'>$artist->name</a>");
+          }
           $artists = implode(", ", $my_artists);
         ?>
           <tr>

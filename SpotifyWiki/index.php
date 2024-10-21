@@ -9,8 +9,6 @@
 <a>
   <?php
   require_once '../api/spotify-api.php';
-
-  function FilterByName($name) {}
   ?>
   <h1>Recherche Spotify</h1>
   <form action='' method="get" id="sectionForm">
@@ -78,7 +76,7 @@ if (isset($_GET['send'])) {
             }
           }
           if (isset($albums->next))
-            $search_results = $spotify->SendUrl($albums->next);
+            $search_results = $spotify->GetResults($albums->next);
           else
             $search_results = null;
           ?>
@@ -119,7 +117,7 @@ if (isset($_GET['send'])) {
             }
           }
           if (isset($artists->next))
-            $search_results = $spotify->SendUrl($artists->next);
+            $search_results = $spotify->GetResults($artists->next);
           else
             $search_results = null;
           ?>
@@ -169,7 +167,7 @@ if (isset($_GET['send'])) {
             }
           }
           if (isset($tracks->next))
-            $search_results = $spotify->SendUrl($tracks->next);
+            $search_results = $spotify->GetResults($tracks->next);
           else
             $search_results = null;
           ?>

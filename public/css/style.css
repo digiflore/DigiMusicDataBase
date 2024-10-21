@@ -27,12 +27,12 @@ img
   max-width:200px;width:100%;
 }
 
-img.icon
+.icon
 {
   width: 30px;
 }
 
-img.picture
+.picture
 {
   width: 200px;
   border-radius: 20px;
@@ -48,4 +48,20 @@ button.filter
   padding:5px 10px;
   margin:0px 5px;
   cursor: pointer;
+}
+
+.results{
+  display:flex;
+  flex-direction:row; /* par défaut axe horizontal */
+  flex-wrap: wrap; 
+}
+
+.results .item{
+  vertical-align: middle;
+  text-align: center;
+  flex:1 0 20%;   /* cette ligne est un raccourci de la suite */
+  flex-grow:1; /* l'élément peut s'agrandir, s'étendre au reste de la page */
+  flex-shrink:0; /* l'élément ne peut pas de réduire */
+  flex-basis:20%; /* l'élément fait 200px sauf s’il reste de la place */
+  padding: 10px 0px;
 }

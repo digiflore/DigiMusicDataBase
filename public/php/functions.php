@@ -20,3 +20,27 @@ function FormatMilliseconds($milliseconds)
 
   return $timeFormat;
 }
+
+function GetCurrentURL()
+{ // Récupère l'url en cours
+  $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+  $current_url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  return $current_url;
+}
+
+function GetCurrentDateTime()
+{
+  $tz = 'Europe/Paris';
+  $timestamp = time();
+  $dt = new DateTime("now", new DateTimeZone($tz)); //first argument "must" be a string
+  $dt->setTimestamp($timestamp); //adjust the object to correct timestamp
+  return $dt->format('d/m/Y H:i:s');
+}
+
+function SetLabel(int $count, string $lib_sing, string $lib_plur)
+{
+  if ($count > 1)
+    return $lib_plur;
+  else
+    return $lib_sing;
+}

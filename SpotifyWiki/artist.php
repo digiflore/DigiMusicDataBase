@@ -12,44 +12,65 @@
       <?php
       require_once('../api/spotify-api.php');
       require_once('../public/php/functions.php');
+      require_once '../public/php/SeekerCommunicator.php';
+
+      // Envoi l'url à l'historique de navigation
+      $current_url = GetCurrentURL();
+      $communicator = new SeekerCommunicator();
+      $communicator->AddURL($current_url, "artist");
 
       $spotify = new SpotifyApi();
+
+      $res = $spotify->GetResults("https://api.spotify.com/v1/artists/" . $_GET['artist_id'] . "/related-artists");
+      $infos_artists = array();
+      foreach ($res->artists as $artist) {
+        $infos_genres = array();
+        foreach ($artist->genres as $genre) {
+          array_push($infos_genres, $genre);
+        }
+        $id = $artist->id;
+        $infos_artists[$id] = $infos_genres;
+      }
       $artist = $spotify->GetArtistById($_GET['artist_id']);
       ?>
-      <!-- Récupère le nom de l'artiste -->
-      <h1>Liste des albums de <?= $artist->name ?></h1>
+      <center><img class=picture src="<?= isset($artist->images[0]->url) ? $artist->images[0]->url : "./images/no.jpg" ?>" alt="Aucune image disponible" />
+
+        <!-- Récupère le nom de l'artiste -->
+        <h1>Liste des albums de <?= $artist->name ?></h1>
+        <?php
+        $my_genres = array();
+        foreach ($artist->genres as $genre)
+          array_push($my_genres, $genre);
+        $genres = implode(", ", $my_genres);
+
+        if (count($artist->genres) > 0) {
+          SetLabel(count($artist->genres), "Genre", "Genres");
+          " : " . $genres;
+        }
+        ?>
+        <br><br>
+      </center>
       <?php
       $albums = $spotify->GetAlbumsByArtistId($_GET['artist_id']);
-      echo "Il y a " . count($albums->items) . " albums.<br><br>";
-      foreach ($albums->items as $album) {
-        //var_dump($album);
-        $album_id = $album->id;
-        $my_artists = array();
-        foreach ($album->artists as $artist)
-          array_push($my_artists, "<a href='./artist.php?artist_id=$artist->id'>$artist->name</a>");
-        $artists = implode(", ", $my_artists);
-        $release_date = $album->release_date;
-        $dateFr = date("d-m-Y", strtotime($release_date));
-      ?>
-        <table>
-          <tr>
-            <td width=100px rowspan="5">
-              <a href="./album.php?album_id=<?= $album->id ?>"><img class="picture" src="<?= $album->images[0]->url ?>" alt=" Image non disponible" /></a>
-            </td>
-            <td>
-              <h2><?= $album->name ?></h2>
-            </td>
-          </tr>
-          <tr>
-            <td><?= $artists ?></td>
-          </tr>
-          <tr>
-            <td><a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../images/spotify.png" /></a></td>
-          </tr>
-          <tr>
-            <td>Date de sortie : <?= $dateFr ?></td>
-          </tr>
-          <tr>
+      echo count($albums->items) . " " . SetLabel(count($albums->items), "album", "albums"); ?>
+
+      <div class=results>
+        <?php
+        foreach ($albums->items as $album) {
+          $album_id = $album->id;
+          $my_genres = array();
+          foreach ($album->artists as $artist)
+            array_push($my_genres, "<a href='./artist.php?artist_id=$artist->id'>$artist->name</a>");
+          $artists = implode(", ", $my_genres);
+          $release_date = $album->release_date;
+          $dateFr = date("d-m-Y", strtotime($release_date));
+        ?>
+          <div class=item>
+            <a href="./SpotifyWiki/album.php?album_id=<?= $album->id ?>"><img class="picture" src="<?= $album->images[0]->url ?>" alt=" Image non disponible" /></a>
+            <?= $album->name ?><br>
+            <?= $artists ?><br>
+            <a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../images/spotify.png" /></a><br>
+            Date de sortie : <?= $dateFr ?><br>
             <?php
             $lib = "";
             if ($album->total_tracks > 1)
@@ -57,11 +78,11 @@
             else
               $lib = "titre";
             ?>
-            <td><?= $album->total_tracks ?> <?= $lib ?></td>
-          </tr>
-        </table>
-        <br><br>
-      <?php
-      }
-      ?>
+            <?= $album->total_tracks ?> <?= $lib ?>
+          </div>
+          <br><br>
+        <?php
+        }
+        ?>
+      </div>
 </body>
