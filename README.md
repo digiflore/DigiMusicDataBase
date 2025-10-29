@@ -20,7 +20,11 @@ DigiMusicDataBase est une application musicale développée en PHP. Elle utilise
 
 ## Prérequis
 Avant d'installer ce projet, assurez-vous d'avoir les éléments suivants installés sur votre machine :
-- [PHP](https://www.php.net/) >= 8.0
+[**WAMPServer**](https://www.wampserver.com/) ou [**XAMPP**](https://www.apachefriends.org/fr/index.html)
+Ces outils fournissent :
+- **Apache** (serveur web)
+- **MySQL / MariaDB** (base de données)
+- **PHP** (interpréteur)
 
 ---
 
@@ -34,14 +38,20 @@ Avant d'installer ce projet, assurez-vous d'avoir les éléments suivants instal
 ---
 
 ## Installation
-1. **Téléchargez le projet** :  
+1. Téléchargez et installez **PHP** via **WAMP/XAMPP**.  
+2. **Téléchargez le projet** :  
    - Soit en cliquant sur le bouton **Code > Download ZIP** sur GitHub, puis en extrayant le dossier.  
    - Soit en clonant le dépôt avec Git :  
      ```bash
      git clone https://github.com/digiflore/digiMusicDataBase.git
      ```
-2. Ouvrez le dossier téléchargé.
-3. Double-cliquez sur le fichier `index.php` pour lancer le jeu dans votre navigateur.
+3. Copiez le projet dans le dossier approprié :  
+   - `C:\wamp64\www` pour WAMP  
+   - `C:\xampp\htdocs` pour XAMPP
+4. Demarrer WAMP ou XAMPP
+5. Accédez au projet via votre navigateur : `http://localhost/digimusicdatabase`
+4. Ouvrez le dossier téléchargé.
+3. Double-cliquez sur le fichier `index.php` pour lancer l dans votre navigateur.
 4. Démarrer une partie et amusez-vous !
 
 ---
