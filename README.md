@@ -50,16 +50,7 @@ Ces outils fournissent :
    - `C:\xampp\htdocs` pour XAMPP
 4. Demarrer WAMP ou XAMPP
 5. Accédez au projet via votre navigateur : `http://localhost/digimusicdatabase`
-4. Ouvrez le dossier téléchargé.
-3. Double-cliquez sur le fichier `index.php` pour lancer l dans votre navigateur.
-4. Démarrer une partie et amusez-vous !
-
----
-
-## Usage
-1. Ouvrez l'application dans votre navigateur.
-2. Tapez le nom d'un artiste, d'un album ou d'une chanson dans la barre de recherche.
-3. Cliquez sur les vignettes pour consulter les détails et écouter la musique sur Spotify.
+4. Bon Spotify !
 
 ---
 
