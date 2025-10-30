@@ -64,6 +64,6 @@ Ces outils fournissent :
 ---
 
 ## Contribuer
-- Proposer des améliorations ou corriger des bugs via une Pull Request.
+Ce dépôt est maintenu à titre personnel. Aucune Pull Request ne sera examinée.
 
 ---
