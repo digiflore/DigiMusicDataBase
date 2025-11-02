@@ -32,7 +32,7 @@
       <img class="picture" src="<?= $album->images[0]->url ?>" alt=" Image non disponible" />
       <?= $album->name ?><br>
       <?= $artists ?><br>
-      <a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../images/spotify.png" /></a><br>
+      <a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../public/images/spotify.png" /></a><br>
       Date de sortie : <?= $dateFr ?><br>
       <?= $album->copyrights[0]->text ?><br>
       <?php
@@ -72,7 +72,7 @@
             <td><?= $track->name ?></td>
             <td><?= $artists ?></td>
             <td><?= FormatMilliseconds($track->duration_ms) ?></td>
-            <td class='link'><a href="<?= $track->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../images/spotify.png" /></a></td>
+            <td class='link'><a href="<?= $track->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../public/images/spotify.png" /></a></td>
           </tr>
         <?php
         }

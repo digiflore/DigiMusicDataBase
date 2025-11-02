@@ -7,7 +7,7 @@
 
 <body>
   <?php
-  require_once("./config/site.php");
+  require_once("./config/config.php");
   ?>
   <center>
     <h1>Banque de données musicale</h1>

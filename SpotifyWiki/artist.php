@@ -22,14 +22,17 @@
       $spotify = new SpotifyApi();
 
       $res = $spotify->GetResults("https://api.spotify.com/v1/artists/" . $_GET['artist_id'] . "/related-artists");
-      $infos_artists = array();
-      foreach ($res->artists as $artist) {
-        $infos_genres = array();
-        foreach ($artist->genres as $genre) {
-          array_push($infos_genres, $genre);
+
+      if (isset($res->artists)) {
+        $infos_artists = array();
+        foreach ($res->artists as $artist) {
+          $infos_genres = array();
+          foreach ($artist->genres as $genre) {
+            array_push($infos_genres, $genre);
+          }
+          $id = $artist->id;
+          $infos_artists[$id] = $infos_genres;
         }
-        $id = $artist->id;
-        $infos_artists[$id] = $infos_genres;
       }
       $artist = $spotify->GetArtistById($_GET['artist_id']);
       ?>
@@ -66,10 +69,10 @@
           $dateFr = date("d-m-Y", strtotime($release_date));
         ?>
           <div class=item>
-            <a href="./SpotifyWiki/album.php?album_id=<?= $album->id ?>"><img class="picture" src="<?= $album->images[0]->url ?>" alt=" Image non disponible" /></a>
+            <a href="./album.php?album_id=<?= $album->id ?>"><img class="picture" src="<?= $album->images[0]->url ?>" alt=" Image non disponible" /></a>
             <?= $album->name ?><br>
             <?= $artists ?><br>
-            <a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../images/spotify.png" /></a><br>
+            <a href=" <?= $album->uri ?>" title="Ouvrir dans Spotify"><img class="icon" src="../public/images/spotify.png" /></a><br>
             Date de sortie : <?= $dateFr ?><br>
             <?php
             $lib = "";
